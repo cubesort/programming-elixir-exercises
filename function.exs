@@ -32,5 +32,10 @@ prefix = fn pre ->
   fn name -> "#{pre} #{name}" end
 end
 
-mrs = prefix.("Mrs.")
-IO.puts mrs.("Smith")
+# mrs = prefix.("Mrs.")
+# IO.puts mrs.("Smith")
+
+# functions-5
+
+Enum.map [1, 2, 3, 4], &(&1 + 2)
+Enum.each [1, 2, 3, 4], &(IO.inspect &1)
