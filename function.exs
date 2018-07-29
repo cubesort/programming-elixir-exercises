@@ -1,9 +1,13 @@
+# functions-2
+
 handle_open = fn
   {:ok, file} -> "First line: #{IO.read(file, :line)}"
   {_, error} -> "Error: #{:file.format_error(error)}"
 end
 
 # IO.puts handle_open.(File.open("./main.c"))
+
+# functions-3
 
 fizz_buzz_helper = fn
   0, 0, _ -> "FizzBuzz"
@@ -21,3 +25,12 @@ end
 # IO.puts fizz_buzz.(10)
 # IO.puts fizz_buzz.(11)
 # IO.puts fizz_buzz.(12)
+
+# functions-4
+
+prefix = fn pre ->
+  fn name -> "#{pre} #{name}" end
+end
+
+mrs = prefix.("Mrs.")
+IO.puts mrs.("Smith")
