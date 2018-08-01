@@ -1,7 +1,6 @@
 defmodule MyList do
-  def mapsum(list, fun), do: mapsum(list, fun, 0)
-  def mapsum([], _fun, sum), do: sum
-  def mapsum([head | tail], fun, sum), do: mapsum(tail, fun, fun.(head) + sum)
+  def mapsum([], _fun), do: 0
+  def mapsum([head | tail], fun), do: fun.(head) + mapsum(tail, fun)
 
   def max([one]), do: one
   def max([head | tail]), do: Kernel.max(head, max(tail))
