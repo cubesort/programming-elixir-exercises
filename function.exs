@@ -37,5 +37,20 @@ end
 
 # functions-5
 
-Enum.map [1, 2, 3, 4], &(&1 + 2)
-Enum.each [1, 2, 3, 4], &(IO.inspect &1)
+# Enum.map [1, 2, 3, 4], &(&1 + 2)
+# Enum.each [1, 2, 3, 4], &(IO.inspect &1)
+
+cast = [
+  %{
+    actor: {"robin", "some"}
+  },
+  %{
+    actor: {"john", "thing"}
+  }
+]
+
+IO.inspect get_and_update_in(
+  cast,
+  [Access.all(), :actor, Access.elem(1)],
+  &({&1, String.reverse(&1)})
+)
