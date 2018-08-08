@@ -63,4 +63,31 @@ end
 # IO.inspect MyList2.split [1, 2, 3, 4, 5], 2
 # IO.inspect MyList2.split [1, 2, 3, 4, 5], 5
 # IO.inspect MyList2.split [1, 2, 3, 4, 5], 8
-IO.inspect MyList2.take([1, 2, 3, 4, 5], 3)
+# IO.inspect MyList2.take([1, 2, 3, 4, 5], 3)
+
+
+# ListsAndRecursion-5
+
+defmodule MyList3 do
+  def flatten(list) do
+    flatten(list, [])
+      |> Enum.reverse
+  end
+  defp flatten([], flattened), do: flattened
+  defp flatten([head | tail], flattened) when is_list(head), do: flatten(tail, flatten(head, []) ++ flattened)
+  defp flatten([head | tail], flattened), do: flatten(tail, [head | flattened])
+
+  def flatten1(list), do: flatten1(list, [])
+  defp flatten1([], flattened), do: Enum.reverse flattened
+  defp flatten1([[h | []] | tail], flattened), do: flatten1([h | tail], flattened)
+  defp flatten1([[h | t] | tail], flattened), do: flatten1([h, t | tail], flattened)
+  defp flatten1([head | tail], flattened), do: flatten1(tail, [head | flattened])
+
+  def flatten2([]), do: []
+  def flatten2([head | tail]), do: flatten2(head) ++ flatten2(tail)
+  def flatten2(head), do: [head]
+end
+
+# IO.inspect(MyList3.flatten [[[1], 2], 3, [4, [5, 6, [7]]]])
+# IO.inspect(MyList3.flatten1 [[[1, 2], 3], 4, [5, [6, [7, 8, 9]]]])
+# IO.inspect(MyList3.flatten2 [[[1, 2], 3], 4, [5, [6, [7, 8, 9]]]])
