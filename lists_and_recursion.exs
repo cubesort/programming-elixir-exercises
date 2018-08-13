@@ -66,7 +66,7 @@ end
 # IO.inspect MyList2.take([1, 2, 3, 4, 5], 3)
 
 
-# ListsAndRecursion-5
+# ListsAndRecursion-6
 
 defmodule MyList3 do
   def flatten(list) do
@@ -102,3 +102,27 @@ end
 
 # IO.inspect MyList7.print_primes(5)
 
+# ListsAndRecursion-8
+
+defmodule OrderSystem do
+  def get_totals(orders, tax_rates) do
+    Enum.map(orders, &(add_total(&1, tax_rates)))
+  end
+
+  defp add_total([_, {_, ship_to}, {_, net_amount}] = order, tax_rates) do
+    tax_rate = Keyword.get(tax_rates, ship_to, 0) + 1
+    order ++ [total_amount: tax_rate * net_amount]
+  end
+end
+
+tax_rates = [
+  NC: 0.075,
+  TX: 0.08
+]
+
+orders = [
+  [id: 123, ship_to: :NC, net_amount: 100.00],
+  [id: 124, ship_to: :CA, net_amount: 100.00]
+]
+
+IO.inspect OrderSystem.get_totals(orders, tax_rates)
