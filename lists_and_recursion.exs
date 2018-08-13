@@ -91,3 +91,14 @@ end
 # IO.inspect(MyList3.flatten [[[1], 2], 3, [4, [5, 6, [7]]]])
 # IO.inspect(MyList3.flatten1 [[[1, 2], 3], 4, [5, [6, [7, 8, 9]]]])
 # IO.inspect(MyList3.flatten2 [[[1, 2], 3], 4, [5, [6, [7, 8, 9]]]])
+
+# ListsAndRecursion-7
+
+defmodule MyList7 do
+  def print_primes(n) do
+    for x <- MyList.span(3, n), rem(x, 2) !== 0, into: [2], do: x
+  end
+end
+
+# IO.inspect MyList7.print_primes(5)
+
