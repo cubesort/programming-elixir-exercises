@@ -44,9 +44,17 @@ defmodule MyString do
     |> String.pad_leading(left_padding)
     |> String.pad_trailing(max)
   end
+
+  def capitalize(string) do
+    string
+    |> String.split(". ")
+    |> Enum.map(&String.capitalize/1)
+    |> Enum.join(". ")
+  end
 end
 
 # IO.puts MyString.printable? 'asd12'
 # IO.puts MyString.anagram? 'asd12', '21ads'
 # IO.puts MyString.calc('12 * 3')
 # IO.puts(MyString.center(["123", "asdf", "fssdafkjlkjsldkfj"]))
+# IO.puts(MyString.capitalize("oh. a DOG. woof. "))
