@@ -29,8 +29,24 @@ defmodule MyString do
   def parse_int(charList), do: parse_int(charList, 0)
   defp parse_int([head | tail], value), do: parse_int(tail, value * 10 + head - ?0)
   defp parse_int([], value), do: value
+
+  def center(stringList) do
+    max = Enum.map(stringList, &(String.length(&1)))
+      |> Enum.max()
+
+    Enum.map(stringList, &(pad_string(&1, max)))
+    |> Enum.each(&(IO.puts(&1)))
+  end
+
+  def pad_string(string, max) do
+    left_padding = div(max + String.length(string), 2)
+    string
+    |> String.pad_leading(left_padding)
+    |> String.pad_trailing(max)
+  end
 end
 
 # IO.puts MyString.printable? 'asd12'
 # IO.puts MyString.anagram? 'asd12', '21ads'
-IO.puts MyString.calc('12 * 3')
+# IO.puts MyString.calc('12 * 3')
+# IO.puts(MyString.center(["123", "asdf", "fssdafkjlkjsldkfj"]))
