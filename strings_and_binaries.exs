@@ -45,6 +45,7 @@ defmodule MyString do
     |> String.pad_trailing(max)
   end
 
+  # StringsAndBinaries-7
   def capitalize(string) do
     string
     |> String.split(". ")
@@ -58,3 +59,38 @@ end
 # IO.puts MyString.calc('12 * 3')
 # IO.puts(MyString.center(["123", "asdf", "fssdafkjlkjsldkfj"]))
 # IO.puts(MyString.capitalize("oh. a DOG. woof. "))
+
+defmodule OrderSystem do
+  @tax_rates [
+    NC: 0.075,
+    TX: 0.08
+  ]
+
+  def get_totals(orders) do
+    Enum.map(orders, &(add_total(&1)))
+  end
+
+  defp add_total([_, {_, ship_to}, {_, net_amount}] = order) do
+    tax_rate = Keyword.get(@tax_rates, ship_to, 0) + 1
+    order ++ [total_amount: tax_rate * net_amount]
+  end
+
+  def read_order(path) do
+    { :ok, file } = File.open(path, [:read])
+    { _, rates } =
+      file
+      |> IO.stream(:line)
+      |> Enum.split(1)
+
+    rates
+    |> Enum.map(&parse_line/1)
+  end
+
+  defp parse_line(line) do
+    [ id, ship_to, net_amount ] = String.trim(line) |> String.split(",")
+    <<_::utf8, ship_to::binary>> = ship_to
+    [ id: String.to_integer(id), ship_to: String.to_atom(ship_to), net_amount: String.to_float(net_amount) ]
+  end
+end
+
+# IO.inspect OrderSystem.read_order("./order_data") |> OrderSystem.get_totals()
