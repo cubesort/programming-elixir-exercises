@@ -11,6 +11,10 @@ defmodule ControlFlow do
       _ -> n
     end
   end
+
+  def ok!({ :ok, data }), do: data
+  def ok!({ error_type, message }), do: raise("#{error_type}: #{message}")
 end
 
-IO.inspect(ControlFlow.fizz_buzz(20))
+# IO.inspect ControlFlow.fizz_buzz(20)
+# File.open("./not_there") |> ControlFlow.ok! |> IO.inspect
