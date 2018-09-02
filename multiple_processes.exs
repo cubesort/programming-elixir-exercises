@@ -16,3 +16,23 @@ defmodule MultipleProcesses do
 end
 
 # MultipleProcesses.create_processes(["john", "betty"])
+
+defmodule MultipleProcesses2 do
+  import :timer, only: [ sleep: 1 ]
+
+  def self_exit(pid) do
+    send(pid, "exit now")
+    exit(:boom)
+    # raise "exception"
+  end
+
+  def run do
+    spawn_monitor(MultipleProcesses2, :self_exit, [self()])
+    sleep(500)
+    receive do
+      message -> IO.puts("Message received: #{message}")
+    end
+  end
+end
+
+# MultipleProcesses2.run()
